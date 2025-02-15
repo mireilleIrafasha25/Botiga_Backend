@@ -3,6 +3,7 @@ import asyncWrapper from "../middleware/async.js";
 import { validationResult } from "express-validator";
 import { NotFoundError } from "../error/notfoundError.js";
 import dotenv from "dotenv"
+import cloudinary from "../utils/cloudinary.js"
 dotenv.config();
 export const TestProduct=(req,res,next)=>
 {
@@ -11,6 +12,8 @@ export const TestProduct=(req,res,next)=>
 
 export const AddProduct=asyncWrapper(async(req,res,next)=>
 {
+    
+    
     // validation
     const errors= validationResult(req);
     if(!errors.isEmpty())
@@ -24,8 +27,10 @@ export const AddProduct=asyncWrapper(async(req,res,next)=>
             name:req.body.name,
            description:req.body.description,
             price:req.body.price,
-            quantity:req.body.quantity,
+          rating:req.body.rating,
+          colors:req.body.colors,
             category:req.body.category,
+            
         }
     );
     const savedProduct=await product.save();

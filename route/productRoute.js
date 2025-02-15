@@ -1,5 +1,7 @@
 import { TestProduct,AddProduct,GetProducts,UpdateProduct,GetProductById,GetProductsByCategory,DeleteProduct} from "../controller/productController.js";
 import express from "express";
+import validateColors from "../middleware/validatecolor.js";
+import upload from "../middleware/multer.js";
 const route=express.Router();
 
 route.get("/test",TestProduct);
