@@ -11,7 +11,7 @@ import Token from "../model/authTokenModel.js";
 import dotenv from "dotenv"
 dotenv.config();
 export const test = (req, res, next) => {
-    res.status(200).json({message:'Hello Brides!'});
+    res.status(200).json({message:'Hello Vendor and Customer!'});
 }
 
 export const SignUp=asyncWrapper(async(req,res,next)=>
