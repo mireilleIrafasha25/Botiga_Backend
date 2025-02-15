@@ -11,7 +11,7 @@ import Token from "../model/authTokenModel.js";
 import dotenv from "dotenv"
 dotenv.config();
 export const test = (req, res, next) => {
-    res.status(200).json({message:'Hello Business Owner!'});
+    res.status(200).json({message:'Hello Brides!'});
 }
 
 export const SignUp=asyncWrapper(async(req,res,next)=>
@@ -50,6 +50,10 @@ export const SignUp=asyncWrapper(async(req,res,next)=>
         otp: otp,
         otpExpires:otpExpirationDate
     });
+    if (!req.body.email) {
+        return res.status(400).send('Email is required');
+      }
+      
     const savedUser= await newUser.save();
     // console.log(savedUser);
  await sendEmail(req.body.email,"Verify your account",`Your OTP is ${otp}`)
@@ -119,10 +123,10 @@ export const SignIn=asyncWrapper(async(req,res,next)=>
         return next(new BadRequestError('Invalid Password'))
     }
     //Generate token
-    const token = jwt.sign({id:FoundUser.id,email:FoundUser.email},process.env.JWT_SECRET_KEY, {expiresIn:'1h'});
+    const token = jwt.sign({id:FoundUser.id,email:FoundUser.email,Firstname:FoundUser.Firstname,Lastname:FoundUser.Lastname,role: FoundUser.role },process.env.JWT_SECRET_KEY, {expiresIn:'1h'});
 
     res.status(200).json({
-        message:"User account verified!",
+        message:"Login successful",
         user:FoundUser,
         token:token
     });
@@ -236,5 +240,67 @@ export const ResetPassword = asyncWrapper(async (req, res, next) => {
         })
     }
    });
+   export const updateUser = asyncWrapper(async (req, res, next) => {
+    // Extract email and updated data from the request body
+    const { email } = req.body;
+    const updatedData = req.body;
+  
+    try {
+      // Find the user by email and update with new data
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { email },                // Search for a user with this email
+        updatedData,              // Update the user with this new data
+        { new: true, runValidators: true } // Return the updated user and run validators
+      );
+  
+      // If no user is found with the given email, return a 404 error
+      if (!updatedUser) {
+        return next(new NotFoundError('User with this email not found'));
+      }
+  
+      // Respond with the updated user data
+      res.status(200).json({
+        message: "User updated successfully",
+        user: updatedUser
+      });
+    } catch (error) {
+      // Handle any unexpected errors
+      next(error);
+    }
+  });
+  
+export const deleteUser = asyncWrapper(async (req, res, next) => {
+    const { id } = req.params;
+
+    const deletedUser = await UserModel.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+        return next(new NotFoundError('User not found'));
+    }
+
+    res.status(200).json({
+        message: "User deleted successfully"
+    });
+});
+export const findUserByName = asyncWrapper(async (req, res, next) => {
+    const { name } = req.query;
+
+    const users = await UserModel.find({
+        $or: [
+            { Firstname: { $regex: name, $options: "i" } },  // Case-insensitive search
+            { Lastname: { $regex: name, $options: "i" } }
+        ]
+    });
+
+    if (!users.length) {
+        return next(new NotFoundError('No user found with that name'));
+    }
+
+    res.status(200).json({
+        size: users.length,
+        users
+    });
+});
+
 
 
