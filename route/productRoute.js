@@ -5,12 +5,10 @@ import upload from "../middleware/multer.js";
 const route=express.Router();
 
 route.get("/test",TestProduct);
-route.post("/addProduct",AddProduct);
+route.post("/addProduct",upload.single('image'),AddProduct);
 route.get("/getProducts",GetProducts);
 route.put("/updateProduct/:productId",UpdateProduct);
 route.get("/getProductById/:productId",GetProductById);
 route.get("/getProductsByCategory/:category",GetProductsByCategory);
 route.delete("/deleteProduct/:id",DeleteProduct);
-
-
 export default route;

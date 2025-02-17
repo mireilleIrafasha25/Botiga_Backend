@@ -4,45 +4,59 @@ import { validationResult } from "express-validator";
 import { NotFoundError } from "../error/notfoundError.js";
 import dotenv from "dotenv"
 import cloudinary from "../utils/cloudinary.js"
+import path from "path";
 dotenv.config();
 export const TestProduct=(req,res,next)=>
 {
     res.status(200).json({message:'Hello Product Owner!'});
 }
 
-export const AddProduct=asyncWrapper(async(req,res,next)=>
-{
-    
-    
-    // validation
-    const errors= validationResult(req);
-    if(!errors.isEmpty())
-    {
-        console.log(errors.array());
-        return next(new BadRequestError(errors.array()[0].msg));
+export const AddProduct = asyncWrapper(async (req, res, next) => {
+    try {
+    //   console.log("File received:", req.file); 
+  
+      if (!req.file) {
+        return res.status(400).json({ error: "Image file is required" });
+      }
+  
+      const filePath = path.resolve(req.file.path); // Convert to absolute path
+  
+      const result = await cloudinary.uploader.upload(filePath, {
+        use_filename: true,
+        unique_filename: false,
+        overwrite: true,
+      });
+  
+    //   console.log("Cloudinary response:", result);
+  
+      if (!result || !result.url) {
+        throw new Error("Failed to upload image to Cloudinary");
+      }
+  
+      const product = new ProductModel({
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        rating: req.body.rating,
+        colors: req.body.colors,
+        category: req.body.category,
+        image: {
+          url: result.url,
+        },
+      });
+  
+      const savedProduct = await product.save();
+    //   console.log("Product saved successfully:", savedProduct);
+  
+      return res.status(201).json({
+        message: "Product created successfully",
+        product: savedProduct,
+      });
+    } catch (error) {
+      console.error("Error adding product:", error);
+      return res.status(500).json({ error: error.message });
     }
-    // Create a new product
-    const product=new ProductModel(
-        {
-            name:req.body.name,
-           description:req.body.description,
-            price:req.body.price,
-          rating:req.body.rating,
-          colors:req.body.colors,
-            category:req.body.category,
-            
-        }
-    );
-    const savedProduct=await product.save();
-    if(savedProduct)
-    {
-return res.status(201).json({
-    message:'Product created successfully',
-    product:savedProduct
-})
-    }
-   
-})
+  });
 
 export const GetProducts=asyncWrapper(async(req,res,next)=>
 {
