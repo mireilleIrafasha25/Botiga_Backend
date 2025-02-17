@@ -24,7 +24,7 @@ const ProductSchema = new schema({
         );
       },
       message:
-        "Invalid color(s) provided. Allowed colors are: Arsenic, Chamoisee, Silver, and White. A product can have at most 4 colors.",
+        "Invalid color(s) provided. Allowed colors are: Arsenic, Chamoisee, silver, and white. A product can have at most 4 colors.",
     },
   },
 });

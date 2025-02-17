@@ -5,7 +5,7 @@ import upload from "../middleware/multer.js";
 const route=express.Router();
 
 route.get("/test",TestProduct);
-route.post("/addProduct",upload.single('image'),AddProduct);
+route.post("/addProduct",upload.single('image'),validateColors,AddProduct);
 route.get("/getProducts",GetProducts);
 route.put("/updateProduct/:productId",UpdateProduct);
 route.get("/getProductById/:productId",GetProductById);
