@@ -36,7 +36,8 @@ export const AddProduct = asyncWrapper(async (req, res, next) => {
       const product = new ProductModel({
         name: req.body.name,
         description: req.body.description,
-        price: req.body.price,
+        Max_price: req.body.Max_price,
+        Min_price:req.body.Min_price,
         rating: req.body.rating,
         colors: req.body.colors,
         category: req.body.category,
@@ -86,7 +87,7 @@ export const UpdateProduct=asyncWrapper(async(req, res, next)=>
     }
    const updatedProduct=await ProductModel.findOneAndUpdate(
     {productId: productId},
-    { $set: updatedData },
+     updatedData, 
     {new:true,runValidators:true}
    );
    if(!updatedProduct)

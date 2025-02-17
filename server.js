@@ -40,7 +40,11 @@ async function startServer() {
       socketTimeoutMS: 45000, // 45 seconds timeout
       maxPoolSize: 10, // Maintain up to 10 socket connections
     });
-
+       // Increase timeout to 2 minutes
+app.use((req, res, next) => {
+  req.setTimeout(120000); // 120 seconds
+  next();
+});
     console.log("Connected to DB");
 
     app.use("/Botiga", router);

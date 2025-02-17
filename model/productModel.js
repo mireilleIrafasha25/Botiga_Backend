@@ -8,7 +8,8 @@ const ProductSchema = new schema({
   name: { type: String, required: [true, "Please enter the product name"] },
   description: { type: String, required: [true, "Please enter the product description"] },
   category:{ type: String, required: [true, "Please enter the product category1"]},
-  price: { type: Number, required: [true, "Please enter the product price"] },
+  Min_price: { type: Number, required: [true, "Please enter the product price"] },
+  Max_price:{ type: Number, required: [true, "Please enter the product price"]},
   rating: { type: Number, min: 1, max: 5, required: true },
   image:{
     url:{

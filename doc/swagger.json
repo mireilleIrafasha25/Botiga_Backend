@@ -408,11 +408,17 @@
            
           },
           {
-            "name": "price",
+            "name": "Min_price",
             "in": "formData",
             "required": true,
             "type":"number"
            
+          },
+          {
+            "name":"Max_price",
+            "in": "formData",
+            "required": true,
+            "type":"number"
           }
           
         ],
