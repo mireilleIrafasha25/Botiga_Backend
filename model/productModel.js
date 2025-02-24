@@ -38,6 +38,6 @@ ProductSchema.pre("save", async function (next) {
   }
   next();
 });
-
+//Product model and entity name called Product
 const ProductModel = mongoose.model("Product", ProductSchema);
 export default ProductModel;
