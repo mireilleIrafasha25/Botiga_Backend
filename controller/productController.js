@@ -13,8 +13,7 @@ export const TestProduct=(req,res,next)=>
 
 export const AddProduct = asyncWrapper(async (req, res, next) => {
     try {
-    //   console.log("File received:", req.file); 
-  
+    
       if (!req.file) {
         return res.status(400).json({ error: "Image file is required" });
       }
@@ -27,7 +26,6 @@ export const AddProduct = asyncWrapper(async (req, res, next) => {
         overwrite: true,
       });
   
-    //   console.log("Cloudinary response:", result);
   
       if (!result || !result.url) {
         throw new Error("Failed to upload image to Cloudinary");
