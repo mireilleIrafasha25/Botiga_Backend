@@ -16,7 +16,7 @@ export const addNewContact = asyncWrapper(async (req, res, next) => {
 export const ListContact = asyncWrapper(async (req, res, next) => {
         const foundContact = await contactModel.find();
         return res.status(200).json({foundContact});
-        next();
+        next(); 
 });
 
 export const findbyUser= asyncWrapper(async (req, res, next) => {
