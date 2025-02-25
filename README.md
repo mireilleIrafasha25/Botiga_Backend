@@ -64,6 +64,12 @@ Here are some key API routes for Product
 | GET    | `/Botiga/product/getProductByCategory/:category`| Get product by Category|
 | DELETE | `/Botiga/product/deleteProduct/:id`             | Delete Product         |
 
+## Technologies Used
 
+Node.js + Express.js (Backend Framework)
+MongoDB + Mongoose (Database)
+JWT for Authentication
+dotenv for environment variables
+Nodemon for development
 
    
