@@ -55,14 +55,14 @@ Here are some key API routes for User Management:
 
 Here are some key API routes for Product
 
-| Method | Endpoint                     | Description            |
-|--------|------------------------------|------------------------|
-| POST   | `/Botiga/product/addProduct` | Add new product        |
-| GET    | `/Botiga/product/getProducts`| Login a user           |
-| PUT    |`/Botiga/product/updateProduct/:productId`|Update Product by Id|
-| POST   | `/Botiga/product/getProductById/:productId`| Get Produt by productId|
-| POST   | `/Botiga/product/getProductByCategory/:category`| Get product by Category|
-| DELETE | `/Botiga/product/deleteProduct/:id`| Delete Product|
+| Method | Endpoint                                        | Description            |
+|--------|-------------------------------------------------|------------------------|
+| POST   | `/Botiga/product/addProduct`                    | Add new product        |
+| GET    | `/Botiga/product/getProducts`                   | List All product       |
+| PUT    |`/Botiga/product/updateProduct/:productId`       |Update Product by Id    |
+| GET    | `/Botiga/product/getProductById/:productId`     | Get Produt by productId|
+| GET    | `/Botiga/product/getProductByCategory/:category`| Get product by Category|
+| DELETE | `/Botiga/product/deleteProduct/:id`             | Delete Product         |
 
 
 
