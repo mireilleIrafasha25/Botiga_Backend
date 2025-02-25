@@ -51,7 +51,18 @@ Here are some key API routes for User Management:
 | POST   | `/Botiga/user/resetpassword` | Reset Password         |
 | POST   | `/Botiga/user/forgotpassword`| Forgot Password        |
 | DELETE | `/Botiga/user/delete/:id`    | Delete User            |
+| POST   |  `/Botiga/user/`             | Verify OTP
 
+Here are some key API routes for Product
+
+| Method | Endpoint                     | Description            |
+|--------|------------------------------|------------------------|
+| POST   | `/Botiga/product/addProduct` | Add new product        |
+| GET    | `/Botiga/product/getProducts`| Login a user           |
+| PUT    |`/Botiga/product/updateProduct/:productId`|Update Product by Id|
+| POST   | `/Botiga/product/getProductById/:productId`| Get Produt by productId|
+| POST   | `/Botiga/product/getProductByCategory/:category`| Get product by Category|
+| DELETE | `/Botiga/product/deleteProduct/:id`| Delete Product|
 
 
 
