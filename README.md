@@ -25,8 +25,7 @@ Make sure you have the following installed on your machine:
 3. Install Dependencies:
    ```sh
    npm install
-4. Set Up Environment Variables
-   Create a .env file in the root directory and add:
+4. Set Up Environment Variables: Create a .env file in the root directory and add:
    ```sh
    EMAIL_SERVICE=your email service name
    EMAIL_USER=your email
