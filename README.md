@@ -67,9 +67,13 @@ Here are some key API routes for Product
 ## Technologies Used
 
 Node.js + Express.js (Backend Framework)
+
 MongoDB + Mongoose (Database)
+
 JWT for Authentication
+
 dotenv for environment variables
+
 Nodemon for development
 
    
