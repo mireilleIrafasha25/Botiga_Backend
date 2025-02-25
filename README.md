@@ -41,16 +41,16 @@ Make sure you have the following installed on your machine:
 
 ## API Endpoints  
 
-Here are some key API routes:  
+Here are some key API routes for User Management:  
 
-| Method | Endpoint              | Description            |
-|--------|----------------------|------------------------|
-| POST   | `/api/auth/register`  | Register a new user   |
-| POST   | `/api/auth/login`     | Login a user          |
-| GET    | `/api/products`       | Get all products      |
-| POST   | `/api/products`       | Create a new product  |
-| PUT    | `/api/products/:id`   | Update a product      |
-| DELETE | `/api/products/:id`   | Delete a product      |
+| Method | Endpoint                     | Description            |
+|--------|------------------------------|------------------------|
+| POST   | `/Botiga/user/signup`        | Register a new user    |
+| POST   | `/Botiga/user/signin`        | Login a user           |
+| GET    | `/Botiga/user/listAll`       | Get all users          |
+| POST   | `/Botiga/user/resetpassword` | Reset Password         |
+| POST   | `/Botiga/user/forgotpassword`| Forgot Password        |
+| DELETE | `/Botiga/user/delete/:id`    | Delete User            |
 
 
 
