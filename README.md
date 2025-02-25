@@ -18,13 +18,18 @@ Make sure you have the following installed on your machine:
    ```sh
    git clone https://github.com/mireilleIrafasha25/Botiga_Backend.git
 
-2.Navigate into the project directory
+2️. Install Dependencies
+   ``sh
+    npm install
+
+3. Navigate into the project directory
   ```bash
    cd Botiga_Backend
 
 3. Clone the repository:
    ```sh
    cd Botiga_Backend
+
 
 
 
