@@ -1,5 +1,4 @@
 # Botiga Backend
-# Botiga Backend
 
 This is the backend for the **Botiga** project, built using **Node.js**, **Express**, and **MongoDB** . It provides APIs for managing the e-commerce functionalities.
 
@@ -36,7 +35,22 @@ Make sure you have the following installed on your machine:
    CLOUD_NAME= your cloud name
    CLOUD_KEY=your cloud key
    CLOUD_SECRET=your cloud secret
+5. Running Server
+   ```sh
+   npm run dev
 
+## API Endpoints  
+
+Here are some key API routes:  
+
+| Method | Endpoint              | Description            |
+|--------|----------------------|------------------------|
+| POST   | `/api/auth/register`  | Register a new user   |
+| POST   | `/api/auth/login`     | Login a user          |
+| GET    | `/api/products`       | Get all products      |
+| POST   | `/api/products`       | Create a new product  |
+| PUT    | `/api/products/:id`   | Update a product      |
+| DELETE | `/api/products/:id`   | Delete a product      |
 
 
 
