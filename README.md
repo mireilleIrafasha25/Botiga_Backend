@@ -19,16 +19,12 @@ Make sure you have the following installed on your machine:
    git clone https://github.com/mireilleIrafasha25/Botiga_Backend.git
 
 2.Navigate into the project directory
-```sh
-cd Botiga_Backend.git
+  ```bash
+   cd Botiga_Backend
 
-3.Install Dependencies
-```sh
-npm install
-
-## Environment Variables
-Create a .env file in the root directory and configure your environment variables:
-```sh
+3. Clone the repository:
+   ```sh
+   cd Botiga_Backend
 
 
 
