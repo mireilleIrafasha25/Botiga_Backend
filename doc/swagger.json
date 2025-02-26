@@ -434,7 +434,32 @@
           }
         }
       }
-    },       
+    },   
+    "/product/getProducts":{
+      "get":{
+        "tags":["Products"],
+        "summary":"Get all products",
+        "description":"Get all products",
+        "responses":{
+          "200":{
+            "description":"All products",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"array",
+                  "items":{
+                    "$ref":"#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }  
+        }
+      }
+    }, 
+    "/product/updateProduct/:productId":{
+      
+    },
              "/contact/add":{
                 "post":{
                   "tags":["Contact Us"],
