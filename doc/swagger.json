@@ -457,8 +457,52 @@
         }
       }
     }, 
-    "/product/updateProduct/:productId":{
-      
+    "/product/updateProduct/{productId}":{
+      "put":{
+        "tags":["Products"],
+        "summary":"Update a product",
+        "description":"Update a product",
+        "parameters":[
+          {
+            "name":"productId",
+            "in":"path",
+            "required":true,
+            "type":"string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        ],
+        "requestBody":{
+         "content": {
+                        "application/json": {
+                          "schema": {
+                            "$ref": "#/components/schemas/Product"
+                          }
+                        }
+                      }
+        },
+              "responses":{
+          "200": {
+            "description": "Product updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
     },
              "/contact/add":{
                 "post":{
@@ -794,52 +838,40 @@
         },
         "required":["email","contact","message"]
       },
-      
-        "Bookings": {
-          "type": "object",
-          "properties": {
-           "Fullname":{
-            "type": "string",
-            "description": "Fullname of the user"
-           },
-           "phone":{
-            "type": "string",
-            "description": "Phone number of user"
-           },
-            "email": {
-              "type": "string",
-              "description": "email of the user"
-            },
-            "category":{
-              "type": "string",
-              "required": true,
-              "enum": {
-                  "values": ["Hall","Tent", "Decoration","Invitation","Photography"],
-                  "message": "{values} is not a valid service category"
-              }
+      "Product":{
+        "type":"object",
+        "properties":{
+          "name":{
+            "type":"string",
+            "description":"name of the product"
           },
-            
-            "serviceName": {
-              "type": "string",
-              "description": "Name of the service to be booked"
-             
-            },
-           
-            "date": {
-              "type": "string",
-              "description": "Date you want a service "
-            },
-
-            "paymentMethod": {
-              "type": "string",
-              "description": "Your choice of payment",
-              "enum":{
-                "values":["Mobile Money","Credit Card","Debit Card"],
-                "message":"{values} is not a valid payment method"
-              }
-            }
-          } 
+          "Max_price":{
+            "type":"number",
+            "description":"Maximum price of the product"
+          },
+          "Min_price":{
+            "type":"number",
+            "description":"Minimum price of the product"
+          },
+          "description":{
+            "type":"string",
+            "description":"description of the product"
+          },
+          "category":{
+            "type":"string",
+            "description":"category of the product"
+          },
+          "rating":{
+            "type":"number",
+            "description":"rating of the product"
+          },
+          "colors":{
+            "type":"string",
+            "description":"colors of the product"
+          }
+        }
       }
+      
      
     }
   }
