@@ -1,4 +1,4 @@
-import BlogModel from "../model/BlogModel";
+import BlogModel from "../model/BlogModel.js";
 import asyncWrapper from "../middleware/async.js";
 import { validationResult } from "express-validator";
 import { NotFoundError } from "../error/notfoundError.js";
@@ -54,9 +54,9 @@ export const AddBlog = asyncWrapper(async (req, res, next) => {
       return res.status(500).json({ error: error.message });
     }
   });
-  export const GetProducts=asyncWrapper(async(req,res,next)=>
+  export const GetBlog=asyncWrapper(async(req,res,next)=>
     {
-        const products=await ProductModel.find();
+        const products=await BlogModel.find();
         if(!products)
         {
             return next(new NotFoundError('No products found'));
@@ -70,9 +70,9 @@ export const AddBlog = asyncWrapper(async (req, res, next) => {
       
     })
     
-    export const UpdateProduct=asyncWrapper(async(req, res, next)=>
+    export const UpdateBlog=asyncWrapper(async(req, res, next)=>
     {
-        const productId=req.params.productId;
+        const id=req.params.id;
         const updatedData=req.body;
         const errors=validationResult(req);
         if(!errors.isEmpty())
@@ -80,72 +80,55 @@ export const AddBlog = asyncWrapper(async (req, res, next) => {
             console.log(errors.array());
             return next(new BadRequestError(errors.array()[0].msg));
         }
-       const updatedProduct=await ProductModel.findOneAndUpdate(
-        {productId: productId},
+       const updatedBlog=await BlogModel.findByIdAndUpdate(
+        id,
          updatedData, 
         {new:true,runValidators:true}
        );
-       if(!updatedProduct)
+       if(!updatedBlog)
        {
         return res.status(404).json({
-            message:'Product not found'
+            message:'Blog not found'
         });
        }
        res.status(200).json({
-        message:'Product updated successfully',
-        product:updatedProduct
+        message:'Blog updated successfully',
+        Blog:updatedBlog
        })
     })
     
-    export const DeleteProduct=asyncWrapper(async(req,res,next)=>
+    export const DeleteBlog=asyncWrapper(async(req,res,next)=>
     {
-        const productId=req.params.id;
-        const deletedProduct=await ProductModel.findByIdAndDelete(productId);
-        if(!deletedProduct)
+        const id=req.params.id;
+        const deletedBlog=await BlogModel.findByIdAndDelete(id);
+        if(!deletedBlog)
         {
             return res.status(404).json({
-                message:'Product not found'
+                message:'Blog not found'
             });
         }
         res.status(200).json({
-            message:'Product deleted successfully',
-            product:deletedProduct
+            message:'Blog deleted successfully',
+            product:deletedBlog
         })
     })
     
-    export const GetProductById=asyncWrapper(async(req,res,next)=>
+    export const GetBlogById=asyncWrapper(async(req,res,next)=>
     {
-        const productId = Number(req.params.productId); // Convert to Number
-        if (isNaN(productId)) {
-          return res.status(400).json({ message: "Invalid productId" });
-        }
+        const id = req.params.id; 
+
     
-        const product = await ProductModel.findOne({ productId });
-        if(!product)
+        const blog = await BlogModel.findById(id);
+        if(!blog)
         {
-            return next(new NotFoundError('Product not found'));
+            return next(new NotFoundError('Blog not found'));
         }
         else
         {
             res.status(200).json({
-                product
+                blog
             })
         }
     })
     
-    export const GetProductsByCategory=asyncWrapper(async(req,res,next)=>
-    {
-        const category=req.params.category;
-        const products=await ProductModel.find({category:category});
-        if(!products)
-        {
-            return next(new NotFoundError('No products found in this category'));
-        }
-        else
-        {
-            res.status(200).json({
-                size: products.length,
-                products
-            })
-        }
-    })
+    
