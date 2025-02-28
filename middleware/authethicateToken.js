@@ -1,28 +1,34 @@
 import jwt from 'jsonwebtoken';
-import { UnauthorizedError} from '../error/index.js'; // Assuming these errors are defined in your project
-
+import dotenv from 'dotenv';
+import { UnauthorizedError} from '../error/index.js';
+import { ForbiddenError } from '../error/index.js';
+dotenv.config()
 export const authenticateToken = (req, res, next) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-    if (!token) {
-        return next(new UnauthorizedError('No token provided'));
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return res.status(401).json({ message: "No token provided" });
     }
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+    const token = authHeader.split(" ")[1];
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+        if (err) {
+            console.error("JWT Verification Error:", err);
+            return res.status(403).json({ message: "Invalid or expired token" });
+        }
+
+        req.user = decoded; // Attach user data to the request
         next();
-    } catch (err) {
-        next(new UnauthorizedError('Invalid token'));
-    }
+    });
 };
+
 
 export const authorize = (role) => {
     return (req, res, next) => {
-        if (req.user.role !== role) {
+        if (req.user.role !== "admin") {
             return next(new ForbiddenError('You do not have permission to perform this action'));
         }
         next();
     };
 };
 
-//export { authenticate, authorize };

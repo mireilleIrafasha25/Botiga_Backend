@@ -50,18 +50,22 @@ export const SignUp=asyncWrapper(async(req,res,next)=>
         otp: otp,
         otpExpires:otpExpirationDate
     });
+    
+
     if (!req.body.email) {
         return res.status(400).send('Email is required');
       }
       
     const savedUser= await newUser.save();
+    const token = jwt.sign({id:savedUser.id,role:savedUser.role },process.env.JWT_SECRET_KEY, {expiresIn:'1h'});
     // console.log(savedUser);
  await sendEmail(req.body.email,"Verify your account",`Your OTP is ${otp}`)
  if(savedUser)
  {
     return res.status(201).json({
         message:"User account created!",
-        user:savedUser
+        user:savedUser,
+        token:token
     })
  }
 });
