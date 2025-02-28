@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const schema = mongoose.Schema;
 const BlogSchema = new schema({
   date:{type:Date, required:[true,"Please enter date"]},
-  description: { type: String, required: [true, "Please enter the product description"] },
+  description: { type: String, required: [true, "Please enter blog description"] },
   image:{
     url:{
     type: String,

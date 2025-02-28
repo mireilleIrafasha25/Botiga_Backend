@@ -46,11 +46,11 @@ export const AddBlog = asyncWrapper(async (req, res, next) => {
       const savedBlog = await blog.save();
   
       return res.status(201).json({
-        message: "Product created successfully",
+        message: "Blog created successfully",
         product: savedBlog,
       });
     } catch (error) {
-      console.error("Error adding product:", error);
+      console.error("Error adding blog:", error);
       return res.status(500).json({ error: error.message });
     }
   });
@@ -59,7 +59,7 @@ export const AddBlog = asyncWrapper(async (req, res, next) => {
         const products=await BlogModel.find();
         if(!products)
         {
-            return next(new NotFoundError('No products found'));
+            return next(new NotFoundError('No blog found'));
         }
         else
         {
@@ -70,32 +70,64 @@ export const AddBlog = asyncWrapper(async (req, res, next) => {
       
     })
     
-    export const UpdateBlog=asyncWrapper(async(req, res, next)=>
-    {
-        const id=req.params.id;
-        const updatedData=req.body;
-        const errors=validationResult(req);
-        if(!errors.isEmpty())
-        {
-            console.log(errors.array());
-            return next(new BadRequestError(errors.array()[0].msg));
-        }
-       const updatedBlog=await BlogModel.findByIdAndUpdate(
-        id,
-         updatedData, 
-        {new:true,runValidators:true}
-       );
-       if(!updatedBlog)
-       {
-        return res.status(404).json({
-            message:'Blog not found'
-        });
-       }
-       res.status(200).json({
-        message:'Blog updated successfully',
-        Blog:updatedBlog
-       })
-    })
+    export const UpdateBlog = asyncWrapper(async (req, res, next) => {
+      try {
+          const id = req.params.id;
+          let updatedData = req.body;
+          const errors = validationResult(req);
+  
+          if (!errors.isEmpty()) {
+              console.log(errors.array());
+              return next(new BadRequestError(errors.array()[0].msg));
+          }
+  
+          let imageUrl = null;
+  
+          // ✅ Check if a new image is uploaded
+          if (req.file) {
+              const filePath = path.resolve(req.file.path);
+  
+              // ✅ Upload new image to Cloudinary
+              const result = await cloudinary.uploader.upload(filePath, {
+                  use_filename: true,
+                  unique_filename: false,
+                  overwrite: true,
+              });
+  
+              if (!result || !result.url) {
+                  throw new Error("Failed to upload new image to Cloudinary");
+              }
+  
+              imageUrl = result.url;
+          }
+  
+          // ✅ Find the blog first
+          const blog = await BlogModel.findById(id);
+          if (!blog) {
+              return res.status(404).json({ message: "Blog not found" });
+          }
+  
+          // ✅ If image is updated, modify image field
+          if (imageUrl) {
+              updatedData.image = { url: imageUrl };
+          }
+  
+          // ✅ Update blog data
+          const updatedBlog = await BlogModel.findByIdAndUpdate(id, updatedData, {
+              new: true,
+              runValidators: true,
+          });
+  
+          res.status(200).json({
+              message: "Blog updated successfully",
+              Blog: updatedBlog,
+          });
+      } catch (error) {
+          console.error("Error updating blog:", error);
+          return res.status(500).json({ error: error.message });
+      }
+  });
+  
     
     export const DeleteBlog=asyncWrapper(async(req,res,next)=>
     {

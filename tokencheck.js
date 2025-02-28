@@ -1,13 +1,48 @@
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv"
-dotenv.config()
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzE2MzVlNDk0MDNlMjRmOGNkZGVmYiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDcyNzEzNSwiZXhwIjoxNzQwNzMwNzM1fQ.M9DcxfrU7ZsiunM6AetynkzF66zaOmn9dCrWNddLdKs";
-const secretKey = process.env.JWT_SECRET_KEY; // Replace with your actual secret
+export const UpdateBlog = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        let updatedData = req.body;
+        // Find the blog first
+        const blog = await BlogModel.findById(id);
+        if (!blog) {
+            return res.status(404).json({ message: "Blog not found" });
+        }
 
-jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-        console.error("JWT Verification Error:", err.message);
-    } else {
-        console.log("Verified Token:", decoded);
+        // Update blog data
+        const updatedBlog = await BlogModel.findByIdAndUpdate(id, updatedData, {
+            new: true,
+            runValidators: true,
+        });
+
+        res.status(200).json({
+            message: "Blog updated successfully",
+            Blog: updatedBlog,
+        });
+    } catch (error) {
+        console.error("Error updating blog:", error);
+        return res.status(500).json({ error: error.message });
     }
-});
+};
+
+  
+  export const DeleteBlog=async(req,res,next)=>
+  {
+    try{
+      const id=req.params.id;
+      const deletedBlog=await BlogModel.findByIdAndDelete(id);
+      if(!deletedBlog)
+      {
+          return res.status(404).json({
+              message:'Blog not found'
+          });
+      }
+      res.status(200).json({
+          message:'Blog deleted successfully',
+          product:deletedBlog
+      })}
+      catch(error){
+        console.error("Error deleting blog:", error);
+        return res.status(500).json({ error: error.message });
+      }
+  }
+  
