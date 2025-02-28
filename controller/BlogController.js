@@ -38,6 +38,7 @@ export const AddBlog = asyncWrapper(async (req, res, next) => {
       const blog = new BlogModel({
         description: req.body.description,
         date:req.body.date,
+        title: req.body.title,
         image: {
           url: result.url,
         },
@@ -56,16 +57,16 @@ export const AddBlog = asyncWrapper(async (req, res, next) => {
   });
   export const GetBlog=asyncWrapper(async(req,res,next)=>
     {
-        const products=await BlogModel.find();
-        if(!products)
+        const blogs=await BlogModel.find();
+        if(!blogs)
         {
             return next(new NotFoundError('No blog found'));
         }
         else
         {
             res.status(200).json({
-                size: products.length,
-                products});
+                size: blogs.length,
+                blogs});
         }
       
     })

@@ -8,5 +8,5 @@ route.post("/addblog",upload.single('image'),AddBlog);
 route.get("/getBlog",GetBlog);
 route.put("/updateBlog/:id",upload.single('image'),UpdateBlog);
 route.get("/getBlogById/:id",GetBlogById);
-route.delete("/deleteProduct/:id",DeleteBlog);
+route.delete("/deleteBlog/:id",DeleteBlog);
 export default route;
