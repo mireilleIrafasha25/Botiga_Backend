@@ -52,7 +52,6 @@ export const AddProduct = asyncWrapper(async (req, res, next) => {
         product: savedProduct,
       });
     } catch (error) {
-      console.error("Error adding product:", error);
       return res.status(500).json({ error: error.message });
     }
   });
